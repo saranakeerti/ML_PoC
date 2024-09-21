@@ -94,7 +94,7 @@ for column in input_df.filter(regex='ICD_DGNS_CD').columns:
 encoded_df = pd.concat(encoded_dfs, axis=1).groupby(level=0, axis=1).max()
 encoded_df = encoded_df.reset_index(drop=True)
 features_df = pd.concat([encoded_df.reset_index(drop=True), input_df[['CLM_TOT_CHRG_AMT']]], axis=1)
-master_feature_df=pd.read_csv('C:/Users/SaranakeertiKotte/Downloads/PoC_AIML/Deployment/FeatureNames.csv',header=0)
+master_feature_df=pd.read_csv('FeatureNames.csv')
 cols=features_df.columns
 mastercols=master_feature_df.FeatureName.values
 for col in mastercols:
