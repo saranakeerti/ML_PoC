@@ -43,7 +43,7 @@ def user_input_features():
     ICD_DGNS_CD23=st.sidebar.text_input('ICD_DGNS_CD23',value=None)
     ICD_DGNS_CD24=st.sidebar.text_input('ICD_DGNS_CD24',value=None)
     ICD_DGNS_CD25=st.sidebar.text_input('ICD_DGNS_CD25',value=None)
-    CLM_TOT_CHRG_AMT=st.sidebar.number_input('CLM_TOT_CHRG_AMT',value=None)
+    CLM_TOT_CHRG_AMT=st.sidebar.number_input('CLM_TOT_CHRG_AMT',value=0)
 
     data = {
         'ICD_DGNS_CD1':ICD_DGNS_CD1,
