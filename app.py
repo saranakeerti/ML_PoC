@@ -123,6 +123,19 @@ try:
             st.write(df)
         else:
             st.warning(f'{file_name} does not exist.')
+    def download_csv(file_name):
+        if os.path.exists(file_name):
+            with open(file_name, 'rb') as file:
+                col1, col2, col3 = st.columns([0.7, 0.7, 1])
+                with col3:
+                    st.download_button(
+                        label="Download Flag data CSV",
+                        data=file,
+                        file_name=file_name,
+                        mime='text/csv'
+                    )
+        else:
+            st.warning(f'{file_name} does not exist.')
     # Save to CSV button
     if st.button('Flags'):
         input_df['Cluster'] = cluster[0]
@@ -131,8 +144,12 @@ try:
     
 
     # Example to display the clustered_data.csv
-    if st.button('ShoeFlagData'):
+    if st.button('ShowFlagData',):
         display_csv('Flag.csv')
+    
+
+    # Example to provide download option for clustered_data.csv
+    download_csv('Flag.csv')
     
 except:
     st.subheader('Cluster Prediction')
