@@ -116,11 +116,23 @@ try:
         else:
             data.to_csv(filename, index=False)
 
+    def display_csv(file_name):
+        if os.path.exists(file_name):
+            df = pd.read_csv(file_name)
+            st.subheader('Flag Content:')
+            st.write(df)
+        else:
+            st.warning(f'{file_name} does not exist.')
     # Save to CSV button
     if st.button('Flags'):
         input_df['Cluster'] = cluster[0]
         save_to_csv(input_df)
         st.success('Data saved to Flag.csv.')
+    
+
+    # Example to display the clustered_data.csv
+    if st.button('ShoeFlagData'):
+        display_csv('Flag.csv')
     
 except:
     st.subheader('Cluster Prediction')
