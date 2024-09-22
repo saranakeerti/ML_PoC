@@ -18,16 +18,16 @@ model = load_model()
 st.sidebar.header("Input Features")
 def user_input_features():
     # Replace these with the actual features your model expects
-    ICD_DGNS_CD1=st.sidebar.text_input('ICD_DGNS_CD1',value='A4152')
-    ICD_DGNS_CD2=st.sidebar.text_input('ICD_DGNS_CD2',value='B182')
+    ICD_DGNS_CD1=st.sidebar.text_input('ICD_DGNS_CD1',value=None)
+    ICD_DGNS_CD2=st.sidebar.text_input('ICD_DGNS_CD2',value=None)
     ICD_DGNS_CD3=st.sidebar.text_input('ICD_DGNS_CD3',value=None)
     ICD_DGNS_CD4=st.sidebar.text_input('ICD_DGNS_CD4',value=None)
-    ICD_DGNS_CD5=st.sidebar.text_input('ICD_DGNS_CD5',value='C50919')
+    ICD_DGNS_CD5=st.sidebar.text_input('ICD_DGNS_CD5',value=None)
     ICD_DGNS_CD6=st.sidebar.text_input('ICD_DGNS_CD6',value=None)
     ICD_DGNS_CD7=st.sidebar.text_input('ICD_DGNS_CD7',value=None)
     ICD_DGNS_CD8=st.sidebar.text_input('ICD_DGNS_CD8',value=None)
     ICD_DGNS_CD9=st.sidebar.text_input('ICD_DGNS_CD9',value=None)
-    ICD_DGNS_CD10=st.sidebar.text_input('ICD_DGNS_CD10',value='E113519')
+    ICD_DGNS_CD10=st.sidebar.text_input('ICD_DGNS_CD10',value=None)
     ICD_DGNS_CD11=st.sidebar.text_input('ICD_DGNS_CD11',value=None)
     ICD_DGNS_CD12=st.sidebar.text_input('ICD_DGNS_CD12',value=None)
     ICD_DGNS_CD13=st.sidebar.text_input('ICD_DGNS_CD13',value=None)
@@ -43,7 +43,7 @@ def user_input_features():
     ICD_DGNS_CD23=st.sidebar.text_input('ICD_DGNS_CD23',value=None)
     ICD_DGNS_CD24=st.sidebar.text_input('ICD_DGNS_CD24',value=None)
     ICD_DGNS_CD25=st.sidebar.text_input('ICD_DGNS_CD25',value=None)
-    CLM_TOT_CHRG_AMT=st.sidebar.text_input('CLM_TOT_CHRG_AMT',value=1000)
+    CLM_TOT_CHRG_AMT=st.sidebar.number_input('CLM_TOT_CHRG_AMT',value=None)
 
     data = {
         'ICD_DGNS_CD1':ICD_DGNS_CD1,
