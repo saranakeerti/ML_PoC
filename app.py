@@ -103,6 +103,10 @@ for col in mastercols:
 scaler = StandardScaler()
 scaled_input = scaler.fit_transform(features_df)
 # Predict cluster
-cluster = model.predict(scaled_input)
-st.subheader('Cluster Prediction')
-st.write(f'The input data belongs to cluster **{cluster[0]}**.')
+try:
+    cluster = model.predict(scaled_input)
+    st.subheader('Cluster Prediction')
+    st.write(f'The input data belongs to cluster **{cluster[0]}**.')
+except:
+    st.subheader('Cluster Prediction')
+    st.write(f'Please enter valid data')
