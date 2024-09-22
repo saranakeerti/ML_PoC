@@ -81,29 +81,47 @@ def user_input_features():
     return features
 
 input_df = user_input_features()
-# Display user input
-st.subheader('User Input Features')
-st.write(input_df)
-# Preprocess input if necessary
-unique_codes = pd.Series(pd.unique(input_df.filter(regex='ICD_DGNS_CD').values.ravel('K'))).dropna()
-encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False, categories=[unique_codes])
-encoded_dfs = []
-for column in input_df.filter(regex='ICD_DGNS_CD').columns:
-    encoded_data = encoder.fit_transform(input_df[[column]])
-    col_names = [name.split('_')[-1] for name in encoder.get_feature_names_out([column])]
-    encoded_dfs.append(pd.DataFrame(encoded_data, columns=col_names))
-encoded_df = pd.concat(encoded_dfs, axis=1).groupby(level=0, axis=1).max()
-encoded_df = encoded_df.reset_index(drop=True)
-features_df = pd.concat([encoded_df.reset_index(drop=True), input_df[['CLM_TOT_CHRG_AMT']]], axis=1)
-master_feature_df=pd.read_csv('FeatureNames.csv')
-cols=features_df.columns
-mastercols=master_feature_df.FeatureName.values
-for col in mastercols:
-    if col not in cols:
-        features_df[col]=0
-scaler = StandardScaler()
-scaled_input = scaler.fit_transform(features_df)
-# Predict cluster
-cluster = model.predict(scaled_input)
-st.subheader('Cluster Prediction')
-st.write(f'The input data belongs to cluster **{cluster[0]}**.')
+try:
+    # Display user input
+    st.subheader('User Input Features')
+    st.write(input_df)
+    # Preprocess input if necessary
+    unique_codes = pd.Series(pd.unique(input_df.filter(regex='ICD_DGNS_CD').values.ravel('K'))).dropna()
+    encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False, categories=[unique_codes])
+    encoded_dfs = []
+    for column in input_df.filter(regex='ICD_DGNS_CD').columns:
+        encoded_data = encoder.fit_transform(input_df[[column]])
+        col_names = [name.split('_')[-1] for name in encoder.get_feature_names_out([column])]
+        encoded_dfs.append(pd.DataFrame(encoded_data, columns=col_names))
+    encoded_df = pd.concat(encoded_dfs, axis=1).groupby(level=0, axis=1).max()
+    encoded_df = encoded_df.reset_index(drop=True)
+    features_df = pd.concat([encoded_df.reset_index(drop=True), input_df[['CLM_TOT_CHRG_AMT']]], axis=1)
+    master_feature_df=pd.read_csv('FeatureNames.csv')
+    cols=features_df.columns
+    mastercols=master_feature_df.FeatureName.values
+    for col in mastercols:
+        if col not in cols:
+            features_df[col]=0
+    scaler = StandardScaler()
+    scaled_input = scaler.fit_transform(features_df)
+    # Predict cluster
+
+    cluster = model.predict(scaled_input)
+    st.subheader('Cluster Prediction')
+    st.write(f'The input data belongs to cluster **{cluster[0]}**.')
+    # Function to save or append data to CSV
+    def save_to_csv(data, filename='Flag.csv'):
+        if os.path.exists(filename):
+            data.to_csv(filename, mode='a', header=False, index=False)
+        else:
+            data.to_csv(filename, index=False)
+
+    # Save to CSV button
+    if st.button('Flags'):
+        input_df['Cluster'] = cluster[0]
+        save_to_csv(input_df)
+        st.success('Data saved to Flag.csv.')
+    
+except:
+    st.subheader('Cluster Prediction')
+    st.write(f'Please enter valid data')
